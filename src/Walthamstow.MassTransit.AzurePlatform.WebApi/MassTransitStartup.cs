@@ -20,8 +20,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using Walthamstow.MassTransit.AzurePlatform.Configs;
+using Walthamstow.MassTransit.AzurePlatform.WebApi.Implementations;
+using Walthamstow.MassTransit.AzurePlatform.WebApi.Interfaces;
 
-namespace Walthamstow.MassTransit.AzurePlatform
+namespace Walthamstow.MassTransit.AzurePlatform.WebApi
 {
     public class MassTransitStartup
     {
@@ -84,7 +86,7 @@ namespace Walthamstow.MassTransit.AzurePlatform
         void CreateBus(IServiceCollectionBusConfigurator busConfigurator, IServiceProvider provider)
         {
             var platformOptions = provider.GetRequiredService<IOptions<PlatformOptions>>().Value;
-            var configurator = new StartupBusConfigurator(platformOptions);
+            var configurator = new StartupBusConfigurator();
             switch (platformOptions.Transport.ToLower(CultureInfo.InvariantCulture))
             {
                 case PlatformOptions.AzureServiceBus:
@@ -98,7 +100,38 @@ namespace Walthamstow.MassTransit.AzurePlatform
                     throw new ConfigurationException($"Unknown transport type: {platformOptions.Transport}");
             }
         }
+        
+        private static void SetupAzureServiceBus(IServiceProvider provider, IServiceCollectionBusConfigurator cfg,
+            List<IPlatformStartup> platformStartups)
+        {
+            if (!IsUsingAzureServiceBus(provider))
+                return;
 
+            cfg.UsingAzureServiceBus((context, configure) =>
+            {
+                var options = context.GetRequiredService<IOptions<ServiceBusOptions>>().Value;
+                if (string.IsNullOrWhiteSpace(options.ConnectionString))
+                    throw new ConfigurationException("The Azure Service Bus ConnectionString must not be empty.");
+                
+                configure.Host(options.ConnectionString);
+                configure.UseHealthCheck(context);
+                
+                if (platformStartups != null)
+                    foreach (var platformStartup in platformStartups)
+                        platformStartup.ConfigureBus(configure, context);
+
+                configure.ConfigureEndpoints(context);
+            });
+        }
+        
+        private static bool IsUsingAzureServiceBus(IServiceProvider provider)
+        {
+            var platformOptions = provider.GetRequiredService<IOptions<PlatformOptions>>().Value;
+            var transport = platformOptions.Transport.ToLower(CultureInfo.InvariantCulture);
+            return transport != PlatformOptions.AzureServiceBus &&
+                   transport != PlatformOptions.ASB;
+        }
+        
         public void Configure(IApplicationBuilder app)
         {
             // here we execute our own startup

@@ -4,8 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Walthamstow.MassTransit.AzurePlatform.Configs;
+using Walthamstow.MassTransit.AzurePlatform.WebApi.Interfaces;
 
-namespace Walthamstow.MassTransit.AzurePlatform
+namespace Walthamstow.MassTransit.AzurePlatform.WebApi.Implementations
 {
     public class ServiceBusStartupBusFactory :
         IStartupBusFactory

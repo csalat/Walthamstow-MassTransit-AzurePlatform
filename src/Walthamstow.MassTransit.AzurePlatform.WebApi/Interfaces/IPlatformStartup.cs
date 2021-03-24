@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Walthamstow.MassTransit.AzurePlatform
+namespace Walthamstow.MassTransit.AzurePlatform.WebApi.Interfaces
 {
     public interface IPlatformStartup
     {

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F4DC394A-21C8-46AD-9A2B-23A6CC73CE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walthamstow.MassTransit.AzurePlatform", "src\Walthamstow.MassTransit.AzurePlatform\Walthamstow.MassTransit.AzurePlatform.csproj", "{A2F6F174-1A1A-4955-8E0E-6375B75460E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walthamstow.MassTransit.AzurePlatform.WebApi", "src\Walthamstow.MassTransit.AzurePlatform.WebApi\Walthamstow.MassTransit.AzurePlatform.WebApi.csproj", "{A2F6F174-1A1A-4955-8E0E-6375B75460E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

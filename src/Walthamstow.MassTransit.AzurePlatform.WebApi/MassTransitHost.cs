@@ -4,23 +4,15 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace Walthamstow.MassTransit.AzurePlatform
+namespace Walthamstow.MassTransit.AzurePlatform.WebApi
 {
     public static class MassTransitHost
     {
         public static IHostBuilder CreateBuilder(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-
             var builder = new HostBuilder();
 
             var currentDirectory = Directory.GetCurrentDirectory();
-
             builder.UseContentRoot(currentDirectory);
             builder.ConfigureHostConfiguration(config =>
             {
