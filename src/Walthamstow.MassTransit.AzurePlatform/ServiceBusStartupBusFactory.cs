@@ -3,19 +3,15 @@ using MassTransit.ExtensionsDependencyInjectionIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Serilog;
-using Walthamstow.MassTransit.AzurePlatform.Transports.ServiceBus;
+using Walthamstow.MassTransit.AzurePlatform.Configs;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup.ServiceBus
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     public class ServiceBusStartupBusFactory :
         IStartupBusFactory
     {
         public void CreateBus(IServiceCollectionBusConfigurator busConfigurator, IStartupBusConfigurator configurator)
         {
-            if (!configurator.HasSchedulerEndpoint)
-                busConfigurator.AddServiceBusMessageScheduler();
-
             busConfigurator.UsingAzureServiceBus((context, cfg) =>
             {
                 var options = context.GetRequiredService<IOptions<ServiceBusOptions>>().Value;
@@ -23,13 +19,6 @@ namespace Walthamstow.MassTransit.AzurePlatform.Startup.ServiceBus
                     throw new ConfigurationException("The Azure Service Bus ConnectionString must not be empty.");
 
                 cfg.Host(options.ConnectionString);
-
-                if (!configurator.TryConfigureQuartz(cfg))
-                {
-                    Log.Information("Configuring Azure Service Bus Message Scheduler (enqueue time)");
-                    cfg.UseServiceBusMessageScheduler();
-                }
-
                 configurator.ConfigureBus(cfg, context);
             });
         }

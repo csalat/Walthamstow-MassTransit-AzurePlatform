@@ -1,24 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Loader;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     public static class MassTransitHost
     {
-        private static bool? _isRunningInContainer;
-
-        public static bool IsRunningInContainer =>
-            _isRunningInContainer ??=
-                bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out var inDocker) &&
-                inDocker;
-
-        public static IHostBuilder CreateBuilder(string appPath, string[] args)
+        public static IHostBuilder CreateBuilder(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -31,16 +21,11 @@ namespace Walthamstow.MassTransit.AzurePlatform.Startup
 
             var currentDirectory = Directory.GetCurrentDirectory();
 
-            builder.UseContentRoot(string.IsNullOrWhiteSpace(appPath)
-                ? currentDirectory
-                : appPath);
-
+            builder.UseContentRoot(currentDirectory);
             builder.ConfigureHostConfiguration(config =>
             {
                 var baseSettingsPath = Path.Combine(currentDirectory, "appsettings.json");
                 config.AddJsonFile(baseSettingsPath, true, true);
-
-                config.AddEnvironmentVariables("MT_");
                 config.AddEnvironmentVariables();
 
                 if (args != null)
@@ -50,17 +35,8 @@ namespace Walthamstow.MassTransit.AzurePlatform.Startup
             builder.ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-
                     var envSettingsPath = Path.Combine(currentDirectory, $"appsettings.{env.EnvironmentName}.json");
                     config.AddJsonFile(envSettingsPath, true, true);
-
-                    if (env.IsDevelopment() && !string.IsNullOrEmpty(env.ApplicationName))
-                    {
-                        var appAssembly =
-                            AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(env.ApplicationName));
-                        if (appAssembly != null)
-                            config.AddUserSecrets(appAssembly, true);
-                    }
                 })
                 .UseSerilog()
                 .UseDefaultServiceProvider((context, options) =>

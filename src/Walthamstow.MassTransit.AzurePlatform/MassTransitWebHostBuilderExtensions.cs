@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     public static class MassTransitWebHostBuilderExtensions
     {

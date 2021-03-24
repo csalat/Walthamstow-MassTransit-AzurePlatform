@@ -6,7 +6,7 @@
     <Title>Walthamstow.MassTransit.AzurePlatform</Title>
     <Description>Fork of MassTransit-Platform, only supports azure bus, all credits go for MassTransit project</Description>
     <PackageProjectUrl>https://github.com/csalat/Walthamstow-MassTransit-AzurePlatform/</PackageProjectUrl>
-    <PackageVersion>7.1.7</PackageVersion>
+    <PackageVersion>7.1.7.1</PackageVersion>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/csalat/Walthamstow-MassTransit-AzurePlatform/</RepositoryUrl>
   </PropertyGroup>
@@ -40,5 +40,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Walthamstow.MassTransit.AzurePlatform.Configs" Version="7.1.7" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@ using MassTransit;
 using MassTransit.Azure.ServiceBus.Core.Topology;
 using Serilog;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     
         public class PlatformOptions
@@ -20,7 +20,6 @@ namespace Walthamstow.MassTransit.AzurePlatform.Startup
         }
 
         public string Transport { get; set; }
-        
 
         /// <summary>
         /// If specified, is the queue name of the endpoint where the message scheduler is running (if using Quartz or HangFire)

@@ -19,9 +19,9 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
-using Walthamstow.MassTransit.AzurePlatform.Startup.ServiceBus;
+using Walthamstow.MassTransit.AzurePlatform.Configs;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     public class MassTransitStartup
     {

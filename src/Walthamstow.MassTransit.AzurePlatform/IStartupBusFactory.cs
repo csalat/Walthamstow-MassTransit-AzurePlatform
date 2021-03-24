@@ -1,6 +1,6 @@
 ﻿using MassTransit.ExtensionsDependencyInjectionIntegration;
 
-namespace Walthamstow.MassTransit.AzurePlatform.Startup
+namespace Walthamstow.MassTransit.AzurePlatform
 {
     public interface IStartupBusFactory
     {
