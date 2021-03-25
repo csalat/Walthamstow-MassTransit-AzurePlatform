@@ -47,13 +47,8 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             where T1 : class, IWebApiPlatformStartup
             where T2 : class, IWebApiPlatformStartup
         {
-            builder.ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config.AddEnvironmentVariables("MT_");
-            });
 
             builder.UseSerilog();
-
             builder.ConfigureServices(services =>
             {
                 Log.Information("Adding Startup: {StartupType}", TypeMetadataCache<T1>.ShortName);
@@ -77,13 +72,8 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
         /// <returns></returns>
         public static IWebHostBuilder UseMassTransitStartup(this IWebHostBuilder builder, params Type[] startupTypes)
         {
-            builder.ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config.AddEnvironmentVariables("MT_");
-            });
 
             builder.UseSerilog();
-
             builder.ConfigureServices(services =>
             {
                 
@@ -96,7 +86,6 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             });
 
             builder.UseStartup<MassTransitStartup>();
-
             return builder;
         }
     }
