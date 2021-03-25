@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MassTransit;
-using Walthamstow.MassTransit.AzurePlatform.Configs;
 using Walthamstow.MassTransit.AzurePlatform.WebApi.Interfaces;
 
 namespace Walthamstow.MassTransit.AzurePlatform.WebApi.Implementations

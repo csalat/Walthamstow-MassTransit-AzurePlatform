@@ -40,6 +40,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Walthamstow.MassTransit.AzurePlatform.Configs" Version="3.1.11" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Walthamstow-MassTransit-AzurePlatform-Configs\src\Walthamstow.MassTransit.AzurePlatform.Configs\Walthamstow.MassTransit.AzurePlatform.Configs.csproj" />
   </ItemGroup>
 </Project>
