@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Walthamstow.MassTransit.AzurePlatform.WebApi.Interfaces
 {
-    public interface IPlatformStartup
+    public interface IWebApiPlatformStartup
     {
         void ConfigurePlatform(IServiceCollectionBusConfigurator configurator, IServiceCollection services,
             IConfiguration configuration);

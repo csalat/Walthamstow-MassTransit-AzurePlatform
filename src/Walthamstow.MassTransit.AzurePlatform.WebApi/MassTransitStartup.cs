@@ -46,8 +46,8 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             
             services.ConfigureSagaDbs(Configuration);
             
-            List<IPlatformStartup> platformStartups = configurationServiceProvider.
-                GetService<IEnumerable<IPlatformStartup>>()?.ToList();
+            List<IWebApiPlatformStartup> platformStartups = configurationServiceProvider.
+                GetService<IEnumerable<IWebApiPlatformStartup>>()?.ToList();
 
             ConfigureApplicationInsights(services);
 
@@ -102,7 +102,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
         }
         
         private static void SetupAzureServiceBus(IServiceProvider provider, IServiceCollectionBusConfigurator cfg,
-            List<IPlatformStartup> platformStartups)
+            List<IWebApiPlatformStartup> platformStartups)
         {
             if (!IsUsingAzureServiceBus(provider))
                 return;
@@ -137,7 +137,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             // here we execute our own startup
 
             var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
-            List<IPlatformStartup> platformStartups = app.ApplicationServices.GetRequiredService<IEnumerable<IPlatformStartup>>()?.ToList();
+            List<IWebApiPlatformStartup> platformStartups = app.ApplicationServices.GetRequiredService<IEnumerable<IWebApiPlatformStartup>>()?.ToList();
             foreach (var platformStartup in platformStartups)
                 platformStartup.Configure(app,env);
 

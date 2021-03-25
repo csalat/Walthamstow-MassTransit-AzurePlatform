@@ -14,7 +14,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi.Implementations
         {
             configurator.UseHealthCheck(context);
 
-            List<IPlatformStartup> hostingConfigurators = context.GetService<IEnumerable<IPlatformStartup>>()?.ToList();
+            List<IWebApiPlatformStartup> hostingConfigurators = context.GetService<IEnumerable<IWebApiPlatformStartup>>()?.ToList();
 
             foreach (var hostingConfigurator in hostingConfigurators)
                 hostingConfigurator.ConfigureBus(configurator, context);

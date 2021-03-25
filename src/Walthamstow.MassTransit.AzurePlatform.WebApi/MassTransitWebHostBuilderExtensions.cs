@@ -18,7 +18,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
         /// <typeparam name="T">The startup class type</typeparam>
         /// <returns></returns>
         public static IWebHostBuilder UseMassTransitStartup<T>(this IWebHostBuilder builder)
-            where T : class, IPlatformStartup
+            where T : class, IWebApiPlatformStartup
         {
             builder.ConfigureAppConfiguration((hostingContext, config) =>
             {
@@ -28,7 +28,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             builder.UseSerilog();
 
             Log.Information("Adding Startup: {StartupType}", TypeMetadataCache<T>.ShortName);
-            builder.ConfigureServices(services => services.AddSingleton<IPlatformStartup, T>());
+            builder.ConfigureServices(services => services.AddSingleton<IWebApiPlatformStartup, T>());
 
             builder.UseStartup<MassTransitStartup>();
 
@@ -44,8 +44,8 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
         /// <typeparam name="T2">The startup class type</typeparam>
         /// <returns></returns>
         public static IWebHostBuilder UseMassTransitStartup<T1, T2>(this IWebHostBuilder builder)
-            where T1 : class, IPlatformStartup
-            where T2 : class, IPlatformStartup
+            where T1 : class, IWebApiPlatformStartup
+            where T2 : class, IWebApiPlatformStartup
         {
             builder.ConfigureAppConfiguration((hostingContext, config) =>
             {
@@ -57,10 +57,10 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
             builder.ConfigureServices(services =>
             {
                 Log.Information("Adding Startup: {StartupType}", TypeMetadataCache<T1>.ShortName);
-                services.AddSingleton<IPlatformStartup, T1>();
+                services.AddSingleton<IWebApiPlatformStartup, T1>();
 
                 Log.Information("Adding Startup: {StartupType}", TypeMetadataCache<T2>.ShortName);
-                services.AddSingleton<IPlatformStartup, T2>();
+                services.AddSingleton<IWebApiPlatformStartup, T2>();
             });
 
             builder.UseStartup<MassTransitStartup>();
@@ -91,7 +91,7 @@ namespace Walthamstow.MassTransit.AzurePlatform.WebApi
                 {
                     Log.Information("Adding Startup: {StartupType}", TypeMetadataCache.GetShortName(type));
 
-                    services.AddSingleton(typeof(IPlatformStartup), type);
+                    services.AddSingleton(typeof(IWebApiPlatformStartup), type);
                 }
             });
 
